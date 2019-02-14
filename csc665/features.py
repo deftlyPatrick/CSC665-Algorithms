@@ -14,13 +14,24 @@ def train_test_split(X, y, test_size, shuffle, random_state = NONE):
 		#X_train & X_test = feature for the training and testing data
 		#y_train & y_train = labels for the training and testing data
 		#X_train, X_test, y_train, y_test = train_test_split(feat_df, y, 0.3, True, 12)
-	test
 
+
+	#test size - between 0 and 1 - how much to allocate to the test set; the rest goes to the train set. 
+	if test_size > 1: 
+		print("Error: Test Size is too big")
+	elif test_size < 0:
+		print("Error: Test Size is too small")
+	else:
+		test_set = 1 - test_size
+		train_set = test_size
+
+	#shuffle - if True, shuffle the dataset, otherwise not. 
 	if shuffle = True:
 		shuffle(X, y)
 	else:
 		print("Shuffle is false.")
 
+	#random_state, integer; if None, the results are random, otherwise fixed to a given seed. 
 	if random_state = NONE:	
 		seed = np.random(X,y)
 	else:
