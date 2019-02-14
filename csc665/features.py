@@ -9,6 +9,23 @@ csv_df.head()
 
 def train_test_split(X, y, test_size, shuffle, random_state = None):
 
+
+    #Ex: 10 subjects -> test_size = 0.2 ; then train = 8 and test = 2
+    X_train = round(X * (1 - test_size))
+    X_test  = round(X * test_size)
+    y_train = round(y * (1 - test_size))
+    y_test  = round(y * test_size)
+
+    if shuffle is True:
+        np.shuffle(X, y)
+
+    if random_state is None:
+        
+
+
+
+
+
     return X_train, X_test, y_train, y_test
 
 def create_categories(df, list_columns):
@@ -51,11 +68,11 @@ def preprocess_ver_1(csv_df):
     return X, y
 
 
-x, y = preprocess_ver_1(csv_df)
+X, y = preprocess_ver_1(csv_df)
 
-plt.scatter(y, x)
+plt.scatter(X, y)
 plt.show()
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(x, y)
-x.shape, X_train.shape, X_test.shape, y_train.shape, y_test.shape
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+X.shape, X_train.shape, X_test.shape, y_train.shape, y_test.shape
