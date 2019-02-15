@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
-import random
-import matplotlib.pyplot as plt
-from sklearn.model_selection import GroupKFold
+from sklearn import utils
 from sklearn.ensemble import RandomForestRegressor
 rf = RandomForestRegressor()
 csv_df = pd.read_csv("Melbourne_housing_FULL.csv")
@@ -12,31 +10,24 @@ def train_test_split(X, y, test_size, shuffle, random_state = None):
 
 
     #Ex: 10 subjects -> test_size = 0.2 ; then train = 8 and test = 2
+    #Random state only used in shuffle
 
     if shuffle is True:
-        np.random.shuffle(X)
-        np.random.shuffle(y)
+        X = utils.shuffle(X, n_samples=len(X), random_state=random_state)
+        y = utils.shuffle(y, n_samples=len(y), random_state=random_state)
 
 
     trainX = round(len(X) * (1 - test_size))
     testX = round(len(X) * test_size)
 
-    X_train = X[:trainX]
+    X_train = X[trainX:]
     X_test = X[:testX]
 
     trainY = round(len(y) * (1 - test_size))
     testY = round(len(y) * test_size)
 
-    y_train = y[:trainY]
+    y_train = y[trainY:]
     y_test = y[:testY]
-
-    # if random_state is None:
-
-    if random_state is None:
-        random.shuffle(X_train)
-        random.shuffle(X_test)
-        random.shuffle(y_train)
-        random.shuffle(y_test)
 
     return X_train, X_test, y_train, y_test
 
