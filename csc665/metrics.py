@@ -7,7 +7,7 @@ def mse(y_predicted, y_true):
 
 def rmse(y_predicted, y_true):
 	# return Root Mean-Squared Error
-	return np.sqrt(np.square(np.subtract(y_predicted, y_true)).mean())
+	return np.sqrt(mse(y_predicted, y_true))
 
 
 def rsq(y_predicted, y_true):

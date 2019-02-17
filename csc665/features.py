@@ -3,14 +3,14 @@ import pandas as pd
 from sklearn import utils
 import random
 # from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
-rf = RandomForestRegressor()
-csv_df = pd.read_csv("melBook2.csv")
+# from sklearn.ensemble import RandomForestRegressor
+# rf = RandomForestRegressor()
+# csv_df = pd.read_csv("Melbourne_housing_FULL.csv")
 # csv_df.head()
 
 
 
-def train_test_split(X, y, test_size, shuffle, random_state = None):
+def train_test_split2(X, y, test_size, shuffle, random_state = None):
 
 
     #Ex: 10 subjects -> test_size = 0.2 ; then train = 8 and test = 2
@@ -92,19 +92,19 @@ def preprocess_ver_1(csv_df):
     feat_df['Date'] = pd.to_datetime(feat_df['Date'], infer_datetime_format=True)
     feat_df['Date'] = feat_df['Date'].astype(np.int64)
     # feat_df = feat_df['Date'].values
-    rf.fit(feat_df, y)
+    # rf.fit(feat_df, y)
     return feat_df, y
 
 
-X, y = preprocess_ver_1(csv_df)
-
-X_train1, X_test1, y_train1, y_test1 = train_test_split(X, y, test_size=0.25, shuffle=True, random_state=5)
-print(X.shape)
-print(X_train1.shape)
-print(X_test1.shape)
-print(y_train1.shape)
-print(y_test1.shape)
-print("\n")
+# X, y = preprocess_ver_1(csv_df)
+#
+# X_train1, X_test1, y_train1, y_test1 = train_test_split(X, y, test_size=0.25, shuffle=True, random_state=5)
+# print(X.shape)
+# print(X_train1.shape)
+# print(X_test1.shape)
+# print(y_train1.shape)
+# print(y_test1.shape)
+# print("\n")
 # X_train2, X_test2, y_train2, y_test2 = train_test_split(X, y, 0.25, True, 5)
 # print(X_train2)
 # print(X_test2)
