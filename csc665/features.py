@@ -10,7 +10,7 @@ import random
 
 
 
-def train_test_split2(X, y, test_size, shuffle, random_state = None):
+def train_test_split(X, y, test_size, shuffle, random_state = None):
 
 
     #Ex: 10 subjects -> test_size = 0.2 ; then train = 8 and test = 2
@@ -41,19 +41,19 @@ def train_test_split2(X, y, test_size, shuffle, random_state = None):
     return X_train, X_test, y_train, y_test
 
 
-def shuffle_data(X, y):
-    x_length = len(X)
-    for i in range(x_length-1):
-        swap_data(X, y, i, random.randrange(i, x_length))
-        return X, y
-
-
-def swap_data(X, y, index, random_index):
-    # Swap the index and replace with random index
-    X[index], X[random_index] = X[random_index], X[index]
-    y[index], y[random_index] = y[random_index], y[index]
-
-
+# def shuffle_data(X, y):
+#     x_length = len(X)
+#     for i in range(x_length-1):
+#         swap_data(X, y, i, random.randrange(i, x_length))
+#         return X, y
+#
+#
+# def swap_data(X, y, index, random_index):
+#     # Swap the index and replace with random index
+#     X[index], X[random_index] = X[random_index], X[index]
+#     y[index], y[random_index] = y[random_index], y[index]
+#
+#
 
 def create_categories(df, list_columns):
     for i in range(len(list_columns)):
