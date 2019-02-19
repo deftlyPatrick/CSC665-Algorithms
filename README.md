@@ -50,10 +50,10 @@ To terminal, type in
 - `source activate py36`
 - `jupyter notebook`
 
-- - - 
+- - - - 
 
 Train vs Test dataset 
-Plot for trees from 1 to 200, in interval of 5 
+- Plot for trees from 1 to 200, in interval of 5 
 
 Code for determining train score
 - `rf.score(X_train, y_train)`
