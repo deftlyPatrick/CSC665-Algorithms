@@ -1,7 +1,6 @@
 # CSC 665 - Project 1 
 
 ## Part 1: Creating a library 
-Markup :  - - - -
 
 ### features.py
 
@@ -15,14 +14,14 @@ Parameters:
 Example:
 	`X_train, X_test, y_train, y_test = train_test_split(X, y, 0.3, True, 12)`
 
-Markup :  - - - -
+- - - -
 
 `def create_categories(df, list_columns)`
 
 - Create values, in-place, in the columns passed in the list_columns to numerical values. Follow the same approach: "string" -> category -> code
 - Replace values in df, in-place
 
-Markup :  - - - -
+- - - -
 
 `def preprocess_ver_1(csv_df)`
 
@@ -32,7 +31,7 @@ Apply the features transformation steps to the dataframe, return new X and y for
 	- Convert all strings to numbers.
 	- Split the dataframe into X and y and return these.
 
-Markup :  - - - -
+- - - -
 
 ### metrics.py
 
