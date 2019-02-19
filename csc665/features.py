@@ -16,13 +16,24 @@ def train_test_split(X, y, test_size, shuffle, random_state = None):
     #Ex: 10 subjects -> test_size = 0.2 ; then train = 8 and test = 2
     #Random state only used in shuffle
 
+
+    # if the shuffle is true,
+    # create an index point for a one dimensional array
+    # so it can be dragged to the dataframe
     if shuffle is True:
         indices = np.arange(y.shape[0])
+        #shuffles the indices among the entire y array, random_state will be decided by the parameter anything above 1 will be set to a certain key
         random_index = utils.shuffle(indices, n_samples=len(indices), random_state=random_state)
         # shuffle_x = X.iloc[[random_index],:]
         # shuffle_x = X.reindex(random_index)
+
+        #the new set of index will set to the new array shuffle_y
         shuffle_y = y[random_index]
+
+        #resets the index of X if it is not reset, then a whole new set of trash data will be inplace and drops N/A data
         X.reset_index(drop=True, inplace=True)
+
+        #reindex the new set of data that is not empty and use the index from y array
         shuffle_x = X.reindex(random_index)
         # shuffle_x = X.reindex(random_index).dropna()
 
@@ -30,32 +41,19 @@ def train_test_split(X, y, test_size, shuffle, random_state = None):
         # print(shuffle_y)
 
     # Multiply the test_size to the length of x to determine how many number to split between test and train
-    x_size = round(len(shuffle_x) * test_size)
+    portions = round(len(shuffle_x) * test_size)
 
-    X_train = shuffle_x[:-x_size]
-    X_test = shuffle_x[-x_size:]
+    X_train = shuffle_x[:-portions]
+    X_test = shuffle_x[-portions:]
 
-    y_train = shuffle_y[:-x_size]
-    y_test = shuffle_y[-x_size:]
+    y_train = shuffle_y[:-portions]
+    y_test = shuffle_y[-portions:]
 
     return X_train, X_test, y_train, y_test
 
-
-# def shuffle_data(X, y):
-#     x_length = len(X)
-#     for i in range(x_length-1):
-#         swap_data(X, y, i, random.randrange(i, x_length))
-#         return X, y
-#
-#
-# def swap_data(X, y, index, random_index):
-#     # Swap the index and replace with random index
-#     X[index], X[random_index] = X[random_index], X[index]
-#     y[index], y[random_index] = y[random_index], y[index]
-#
-#
-
 def create_categories(df, list_columns):
+
+    #looping the columns and setting it as a category 
     for i in range(len(list_columns)):
         lst = list_columns[i]
         df[lst] = df[lst].astype('category').cat.codes
@@ -63,11 +61,8 @@ def create_categories(df, list_columns):
 
 
 def preprocess_ver_1(csv_df):
-    # csv_df = pd.read_csv(csv_file)
 
-    # feat_df = csv_df.drop('Price', axis=1)
-    # y = csv_df['Price'].values
-
+    #in class code
     feat_df = csv_df.drop('Price', axis=1)
     csv_df.shape
     feat_df.shape
@@ -91,10 +86,25 @@ def preprocess_ver_1(csv_df):
     feat_df.head()
     feat_df['Date'] = pd.to_datetime(feat_df['Date'], infer_datetime_format=True)
     feat_df['Date'] = feat_df['Date'].astype(np.int64)
-    # feat_df = feat_df['Date'].values
-    # rf.fit(feat_df, y)
     return feat_df, y
 
+
+################################################################################################################################################
+########################################################Testing Portion#########################################################################
+
+# def shuffle_data(X, y):
+#     x_length = len(X)
+#     for i in range(x_length-1):
+#         swap_data(X, y, i, random.randrange(i, x_length))
+#         return X, y
+#
+#
+# def swap_data(X, y, index, random_index):
+#     # Swap the index and replace with random index
+#     X[index], X[random_index] = X[random_index], X[index]
+#     y[index], y[random_index] = y[random_index], y[index]
+#
+#
 
 # X, y = preprocess_ver_1(csv_df)
 #
