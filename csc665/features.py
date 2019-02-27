@@ -1,12 +1,13 @@
 import numpy as np
 import pandas as pd
 from sklearn import utils
-import random
+import requests
+# import random
 # from sklearn.model_selection import train_test_split
 # from sklearn.ensemble import RandomForestRegressor
 # rf = RandomForestRegressor()
-# csv_df = pd.read_csv("Melbourne_housing_FULL.csv")
-# csv_df.head()
+csv_df = pd.read_csv("Melbourne_housing_FULL.csv")
+csv_df.head()
 
 
 
@@ -20,6 +21,7 @@ def train_test_split(X, y, test_size, shuffle, random_state = None):
     # if the shuffle is true,
     # create an index point for a one dimensional array
     # so it can be dragged to the dataframe
+    print(X.shape[0])
     if shuffle is True:
         indices = np.arange(y.shape[0])
         #shuffles the indices among the entire y array, random_state will be decided by the parameter anything above 1 will be set to a certain key
@@ -87,6 +89,7 @@ def preprocess_ver_1(csv_df):
     feat_df['Date'] = pd.to_datetime(feat_df['Date'], infer_datetime_format=True)
     feat_df['Date'] = feat_df['Date'].astype(np.int64)
     return feat_df, y
+
 
 
 ################################################################################################################################################
