@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
-import metrics
-import features
+
 
 
 class DecisionTreeRegressor:
@@ -45,14 +44,18 @@ class DecisionTreeRegressor:
         for i in range(self.X.shape[1]):
             self.find_best_split(i)
 
-        # Once done with finding the split, actually split and # create two subtrees
+
+
+            # Once done with finding the split, actually split and # create two subtrees
         self.left = DecisionTreeRegressor()
         self.left.internal_fit()
         self.right = DecisionTreeRegressor()
         self.right.internal_fit()
 
-
     def find_best_split(self, i):
+
+
+
         self.split_col = i
         # self.X.sort_values(self.X.columns[i], inplace=True)
         X = self.X.values[self.indices, i]
@@ -71,6 +74,8 @@ class DecisionTreeRegressor:
         #     predValue = np.sum(y)/len(y-i)
         #     y = pow(y - predValue,2)
         #     MSE = np.sum(y)/len(y)
+
+        #
 
         total_MSE_prev = 10000000000000000000000000000000000
         splitLeft = None
@@ -114,20 +119,9 @@ class DecisionTreeRegressor:
                     splitRight = self.X.iloc[splitPoint:]
                     left_data = y[:splitPoint]
                     right_data = y[splitPoint:]
-
-                    ####
-                    self.split_val = X_split_value
-                    self.split_mse = total_MSE_prev
-                    self.split_col = i
-
-                    #subtrees
-                    self.left = left_data
-                    self.right = right_data
                     break
                 else:
                     total_MSE_prev = total_MSE
-                    self.mse = total_MSE_prev
-
 
         # for i in range(self.N):
         #     left = X <= X[i]
@@ -135,12 +129,6 @@ class DecisionTreeRegressor:
 
         # X_feature_split = X.iloc[:, i]
         # X_split_value = (X_feature_split[i - 2] + X_feature_split[i - 1]) / 2
-
-    def predict(self, X: pd.DataFrame):
-        pass
-
-    def score(self, X: pd.DataFrame, y: np.array):
-        return metrics.rsq(predict(X), y)
 
 
 #

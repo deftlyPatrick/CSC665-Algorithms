@@ -6,8 +6,8 @@ import requests
 # from sklearn.model_selection import train_test_split
 # from sklearn.ensemble import RandomForestRegressor
 # rf = RandomForestRegressor()
-csv_df = pd.read_csv("Melbourne_housing_FULL.csv")
-csv_df.head()
+# csv_df = pd.read_csv("Melbourne_housing_FULL.csv")
+# csv_df.head()
 
 
 
