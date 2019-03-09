@@ -47,29 +47,29 @@ class DecisionTreeRegressor:
         for i in range(self.X.shape[1]):
             self.find_best_split(i)
 
-        self.depth += 1
         print("Split Column: ", X.columns[self.split_col])
         # print("Split Value: ", self.split_val)
         # print("Split MSE: ", self.split_mse)
         print("MSE: ", self.mse)
-        print("Value: ", self.value)
+        print("Value <=", self.value)
         print("Depth: ", self.depth)
         print("Sample: ", self.N)
+        self.depth += 1
 
 
 
         # Once done with finding the split, actually split and # create two subtrees
-
         self.indices_left = np.where(self.left)[0]
-        if len(self.indices_left) != 0:
-            self.left = DecisionTreeRegressor(0, 0)
+        if (len(self.indices_left) != int(self.min_samples_leaf-1)) and (self.depth < self.max_depth):
+            self.left = DecisionTreeRegressor(self.max_depth, self.min_samples_leaf)
             self.left.internal_fit(X, y, self.indices_left, self.depth)
         else:
             return
 
+
         self.indices_right = np.where(self.right)[0]
-        if len(self.indices_left) != 0:
-            self.right = DecisionTreeRegressor(0,0)
+        if len(self.indices_right) != int(self.min_samples_leaf-1) and (self.depth < self.max_depth):
+            self.right = DecisionTreeRegressor(self.max_depth, self.min_samples_leaf)
             self.right.internal_fit(X, y, self.indices_right,self.depth)
         else:
             return
@@ -111,86 +111,11 @@ class DecisionTreeRegressor:
 # ########
 # import pandas as pd
 # import numpy as np
-csv_df = pd.read_csv("http://www-bcf.usc.edu/~gareth/ISL/Income2.csv")
+
+
+csv_df = pd.read_csv("TrainIncome.csv")
 X = csv_df.drop('Income', axis=1)
 y = csv_df['Income']
 
-Z = DecisionTreeRegressor(30, 50)
+Z = DecisionTreeRegressor(5, 1)
 Z.fit(X, y)
-
-
-# total_MSE_prev = 10000000000000000000000000000000000
-#         splitLeft = None
-#         splitRight = None
-#         X_split_value = 0
-#         total_MSE = 0
-#         value = 0
-#         splitPoint = 0
-#         for i in range(len(y)):
-#             if i != 1:
-#
-#                 left = y[:i]
-#                 right = y[i:]
-#                 MSE_a = 0
-#                 if len(left) > 0:
-#                     valueLeft = np.sum(left)/i
-#                     diff_a = valueLeft - left
-#                     MSE_a = np.sum(pow(diff_a, 2)) / i
-#                 ##Part 2
-#                 valueRight = np.sum(right)/ (len(y) - i)
-#                 ##Returns average of the dataset in the first go-around
-#                 if i == 0:
-#                     value = valueRight
-#                     print("Total Value of Dataset:", value)
-#
-#                 diff_b = valueRight - right
-#                 MSE_b = np.sum(pow(diff_b, 2)) / len(right)
-#                 total_MSE = MSE_a + MSE_b
-#                 print("Current MSE: ", total_MSE)
-#                 print("Previous MSE: ", total_MSE_prev)
-#                 if total_MSE > total_MSE_prev:
-#                     # print("Length of y: ", len(y))
-#                     print("Data is split")
-#                     print("Self.X:", self.X)
-#                     X_feature_split = self.X.iloc[:, self.split_col]
-#                     X_split_value = (X_feature_split[i - 2] + X_feature_split[i - 1]) / 2
-#                     print("Split_Value: ", X_split_value)
-#                     splitPoint = i - 1
-#                     # print(i - 1)
-#                     splitLeft = self.X.iloc[:splitPoint]
-#                     splitRight = self.X.iloc[splitPoint:]
-#                     left_data = y[:splitLeft]
-#                     right_data = y[splitRight:]
-#
-#                     ####
-#                     self.split_val = X_split_value
-#                     self.split_mse = total_MSE_prev
-#                     self.split_col = i
-#
-#                     #subtrees
-#                     self.left = left_data
-#                     self.right = right_data
-#                     break
-#                 else:
-#                     total_MSE_prev = total_MSE
-#                     self.mse = total_MSE_prev
-#
-#
-#         # for i in range(self.N):
-#         #     left = X <= X[i]
-#         #     right = X > X[i]
-#
-#         # X_feature_split = X.iloc[:, i]
-#         # X_split_value = (X_feature_split[i - 2] + X_feature_split[i - 1]) / 2
-#     #
-#     # def predict(self, X: pd.DataFrame):
-#     #     pass
-#     #
-#     # def score(self, X: pd.DataFrame, y: np.array):
-#     #     return metrics.rsq(predict(X), y)
-#
-#
-# #
-# # ########
-# # import pandas as pd
-# # import numpy as np

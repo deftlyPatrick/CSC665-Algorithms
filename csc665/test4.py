@@ -10,7 +10,10 @@ y = csv_df['Income']
 
 print(X.columns[1])
 
+states = [False, False, False, False, True, True, False, True, False, False, False, False, False, False, False, False]
+Z = np.where(states)[0]
 
+print
 #
 # # for i in range(len(y)):
 # #     mse_pt1 = met.mse(y[:i].mean(),y[:i])
