@@ -29,3 +29,5 @@ def visualize_tree(dt, figsize=(20, 20), feature_names=None):
 	subprocess.call(['dot', '-Tpng', 'tree.dot', '-o', 'tree.png'])
 	plt.figure(figsize=figsize)
 	plt.imshow(plt.imread('tree.png'))
+
+
