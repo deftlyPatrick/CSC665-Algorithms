@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import metrics as met
-import features
+import features as ft
 
 
 class DecisionTreeRegressor:
@@ -106,6 +106,10 @@ class DecisionTreeRegressor:
                 self.split_val =X[j]
 
 
+    # def predict(self, X: pd.DataFrame):
+    #
+    # def score(self, X: pd.DataFrame, y: np.array):
+    #      return met.rsq(predict(X), y)
 
 #
 # ########
@@ -113,7 +117,9 @@ class DecisionTreeRegressor:
 # import numpy as np
 
 
+
 csv_df = pd.read_csv("TrainIncome.csv")
+# X, y = ft.preprocess_ver_1(csv_df)
 X = csv_df.drop('Income', axis=1)
 y = csv_df['Income']
 
