@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a42d86ec-577f-45cd-8485-1229b432b69c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/csc665/metrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/csc665/metrics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/csc665/tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/csc665/tree.py" afterDir="false" />
-    </list>
+    <list default="true" id="a42d86ec-577f-45cd-8485-1229b432b69c" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +97,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="922" />
     <option name="width" value="943" />
     <option name="height" value="1087" />
@@ -159,7 +156,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="922" y="0" width="943" height="1087" extended-state="0" />
+    <frame x="922" y="0" width="943" height="1087" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
