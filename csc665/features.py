@@ -1,145 +1,85 @@
-import numpy as np
+import re
 import pandas as pd
-from sklearn import utils
-import requests
-# import random
-# from sklearn.model_selection import train_test_split
-# from sklearn.ensemble import RandomForestRegressor
-# rf = RandomForestRegressor()
-# csv_df = pd.read_csv("Melbourne_housing_FULL.csv")
-# csv_df.head()
+import numpy as np
+from typing import Tuple, AnyStr
+from pandas.api.types import is_string_dtype
+
+def create_categories(df: pd.DataFrame):
+	for name, col in df.items():
+		if is_string_dtype(col):
+			df[name] = df[name].astype('category').cat.codes
+
+def preprocess_ver_1(csv_df: pd.DataFrame, target_col_name: AnyStr) -> Tuple[pd.DataFrame, np.ndarray]:
+
+
+	rows_labeled_na = csv_df.isnull().any(axis=1)
+	rows_with_data = csv_df[~rows_labeled_na].copy()
+
+
+	rows_with_data['Date'] = pd.to_datetime(rows_with_data['Date'], infer_datetime_format=True)
+	rows_with_data['Date'] = rows_with_data['Date'].astype(np.int64)
+
+	create_categories(rows_with_data)
+
+	feat_df = rows_with_data.drop(target_col_name, axis=1)
+	X = feat_df
+	y = rows_with_data[target_col_name].values
+
+	return X, y
+
+def train_test_split(X: pd.DataFrame, y: np.array, test_size, shuffle, random_state=None) -> Tuple[pd.DataFrame, pd.DataFrame, np.array, np.array]:
+
+	if shuffle:
+		rs = np.random.RandomState(random_state)
+		shuffled_indices = rs.permutation(X.shape[0])
+		X_shuffled = X.iloc[shuffled_indices]
+		y_shuffled = y[shuffled_indices]
+	else:
+		X_shuffled = X
+		y_shuffled = y
+
+	train_end = int(X.shape[0] * (1 - test_size))
+	assert train_end < X.shape[0]
+
+	return X_shuffled[:train_end], X_shuffled[train_end:], y_shuffled[:train_end], y_shuffled[train_end:]
+
+def create_datetime_features(df: pd.DataFrame, field_name: str, drop_orig: bool = True, add_time: bool = False):
+
+	field = df[field_name]
+	assert isinstance(field, pd.Series)
+	field_type = field.dtype
+
+	if not np.issubdtype(field_type, np.datetime64):
+		df[field_name] = field = pd.to_datetime(field, infer_datetime_format=True)
+		assert isinstance(field, pd.Series)
+
+	col_prefix = re.sub('[Dd]ate$', '', field_name)
+
+	attr = ['year', 'month', 'week',
+			'day', 'dayofweek', 'dayofyear',
+			'is_month_start', 'is_month_end', 'is_quarter_start',
+			'is_quarter_end', 'is_year_start', 'is_year_end']
+
+	if add_time:
+		attr += ['hour', 'minute', 'second']
+
+	for name in attr:
+		df[col_prefix + "_" + name] = getattr(field.dt, name.lower())
+
+	df[col_prefix + "_elapsed"] = field.astype(np.int64)
+
+	if drop_orig:
+		df.drop([field_name], axis = 1, inplace = True)
+
+class Object(object):
+	pass
 
 
 
-def train_test_split(X, y, test_size, shuffle, random_state = None):
-
-
-    #Ex: 10 subjects -> test_size = 0.2 ; then train = 8 and test = 2
-    #Random state only used in shuffle
-
-
-    # if the shuffle is true,
-    # create an index point for a one dimensional array
-    # so it can be dragged to the dataframe
-    print(X.shape[0])
-    if shuffle is True:
-        indices = np.arange(y.shape[0])
-        #shuffles the indices among the entire y array, random_state will be decided by the parameter anything above 1 will be set to a certain key
-        random_index = utils.shuffle(indices, n_samples=len(indices), random_state=random_state)
-        # shuffle_x = X.iloc[[random_index],:]
-        # shuffle_x = X.reindex(random_index)
-
-        #the new set of index will set to the new array shuffle_y
-        shuffle_y = y[random_index]
-
-        #resets the index of X if it is not reset, then a whole new set of trash data will be inplace and drops N/A data
-        X.reset_index(drop=True, inplace=True)
-
-        #reindex the new set of data that is not empty and use the index from y array
-        shuffle_x = X.reindex(random_index)
-        # shuffle_x = X.reindex(random_index).dropna()
-
-        # print(shuffle_x)
-        # print(shuffle_y)
-
-    # Multiply the test_size to the length of x to determine how many number to split between test and train
-    portions = round(len(shuffle_x) * test_size)
-
-    X_train = shuffle_x[:-portions]
-    X_test = shuffle_x[-portions:]
-
-    y_train = shuffle_y[:-portions]
-    y_test = shuffle_y[-portions:]
-
-    return X_train, X_test, y_train, y_test
-
-def create_categories(df, list_columns):
-
-    #looping the columns and setting it as a category 
-    for i in range(len(list_columns)):
-        lst = list_columns[i]
-        df[lst] = df[lst].astype('category').cat.codes
-    return df
-
-
-def preprocess_ver_1(csv_df):
-
-    #in class code
-    feat_df = csv_df.drop('Price', axis=1)
-    csv_df.shape
-    feat_df.shape
-    y = csv_df['Price'].values
-    y.shape
-    rows_labeled_na = csv_df.isnull().any(axis=1)
-    rows_with_na = csv_df[rows_labeled_na]
-    rows_with_data = csv_df[~rows_labeled_na]
-    csv_df.shape, rows_with_na.shape, rows_with_data.shape
-    feat_df = rows_with_data.drop('Price', axis=1)
-    feat_df.shape
-    y = rows_with_data['Price'].values
-    y.shape
-    suburbs = {}
-    for s in feat_df["Suburb"].values:
-        if s not in suburbs:
-            suburbs[s] = len(suburbs)
-    feat_df['Suburb'] = feat_df['Suburb'].replace(suburbs)
-    categories_list = ['Type', 'Address', 'Method', 'SellerG', 'CouncilArea', 'Regionname']
-    feat_df = create_categories(feat_df, categories_list)
-    feat_df.head()
-    feat_df['Date'] = pd.to_datetime(feat_df['Date'], infer_datetime_format=True)
-    feat_df['Date'] = feat_df['Date'].astype(np.int64)
-    return feat_df, y
 
 
 
-################################################################################################################################################
-########################################################Testing Portion#########################################################################
-
-# def shuffle_data(X, y):
-#     x_length = len(X)
-#     for i in range(x_length-1):
-#         swap_data(X, y, i, random.randrange(i, x_length))
-#         return X, y
-#
-#
-# def swap_data(X, y, index, random_index):
-#     # Swap the index and replace with random index
-#     X[index], X[random_index] = X[random_index], X[index]
-#     y[index], y[random_index] = y[random_index], y[index]
-#
-#
-
-# X, y = preprocess_ver_1(csv_df)
-#
-# X_train1, X_test1, y_train1, y_test1 = train_test_split(X, y, test_size=0.25, shuffle=True, random_state=5)
-# print(X.shape)
-# print(X_train1.shape)
-# print(X_test1.shape)
-# print(y_train1.shape)
-# print(y_test1.shape)
-# print("\n")
-# X_train2, X_test2, y_train2, y_test2 = train_test_split(X, y, 0.25, True, 5)
-# print(X_train2)
-# print(X_test2)
-# print(y_train2)
-# print(y_test2)
-# print("\n")
-# X_train3, X_test3, y_train3, y_test3 = train_test_split(X, y, 0.25, True, None)
-# print(X_train3)
-# print(X_test3)
-# print(y_train3)
-# print(y_test3)
-# print("\n")
-# X_train4, X_test4, y_train4, y_test4 = train_test_split(X, y, 0.25, True, None)
-# print(X_train4)
-# print(X_test4)
-# print(y_train4)
-# print(y_test4)
-# print("\n")
-
-# X_train, X_test, y_train, y_test = train_test_split(x_1, y_1, 0.25, True, None)
 
 
 
-# X.shape, X_train.shape, X_test.shape, y_train.shape, y_test.shape
 

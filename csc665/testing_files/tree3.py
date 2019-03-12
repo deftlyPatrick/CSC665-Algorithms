@@ -17,6 +17,7 @@ class DecisionTreeRegressor:
         self.indices = range(self.N)
         self.internal_fit(X, y, self.indices,0)
 
+
     def internal_fit(self, X, y, indices, depth):
         self.X = X
         self.y = y
@@ -27,7 +28,7 @@ class DecisionTreeRegressor:
         # Calculate value
         self.value = None
         self.mse = 10000000000000
-        # self.N = None
+       # self.N = 9
 
         self.split_col = None
         # Split value for the split_col
@@ -35,8 +36,9 @@ class DecisionTreeRegressor:
         # The mse for the current or best split
         self.split_mse = 10000000000000
 
-        self.left = None
-        self.right = None
+
+        self.left_temp = None
+        self.right_temp = None
 
         self.split()
 
@@ -47,6 +49,7 @@ class DecisionTreeRegressor:
         for i in range(self.X.shape[1]):
             self.find_best_split(i)
 
+
         print("Split Column: ", X.columns[self.split_col])
         # print("Split Value: ", self.split_val)
         # print("Split MSE: ", self.split_mse)
@@ -56,67 +59,24 @@ class DecisionTreeRegressor:
         print("Sample: ", self.N)
         self.depth += 1
 
-        # total_array = self.left + self.right
-        # big_array = np.where(total_array)[0]
-        # display = self.X.values[big_array]
-
         # Once done with finding the split, actually split and # create two subtrees
+        # for i in range(self.indices):
+        #     self.left[i] = self.left_temp[i]
+        #     self.right[i] = self.right_temp[i]
+        self.indices_left = np.where(self.left)[0]
+        if (len(self.indices_left) != int(self.min_samples_leaf-1)) and (self.depth < self.max_depth):
+            self.left = DecisionTreeRegressor(self.max_depth, self.min_samples_leaf)
+            self.left.internal_fit(X, y, self.indices_left, self.depth)
+        else:
+            return
 
 
-
-
-
-        # self.indices_left = np.where(self.left)[0]
-        # if (len(self.indices_left) != int(self.min_samples_leaf-1)) and (self.depth < self.max_depth):
-        #     self.left = DecisionTreeRegressor(self.max_depth, self.min_samples_leaf)
-        #     print("\n")
-        #     print("Left: ")
-        #     self.left.internal_fit(X, y, self.indices_left, self.depth)
-        # else:
-        #     return
-        #
-        #
-        #
         # self.indices_right = np.where(self.right)[0]
         # if len(self.indices_right) != int(self.min_samples_leaf-1) and (self.depth < self.max_depth):
         #     self.right = DecisionTreeRegressor(self.max_depth, self.min_samples_leaf)
-        #     print("\n")
-        #     print("Right: ")
         #     self.right.internal_fit(X, y, self.indices_right,self.depth)
         # else:
         #     return
-
-        a = []
-
-        for i in range(len(self.left)):
-            if self.left[i] == True:
-                a.append(i)
-            self_indices_left = np.array(a)
-        print(a)
-        # self_indices_left = np.array(a)
-        #
-        if (len(self_indices_left) != int(self.min_samples_leaf-1)) and (self.depth < self.max_depth):
-                self.left = DecisionTreeRegressor(self.max_depth, self.min_samples_leaf)
-                print("\n")
-                print("Left: ")
-                self.left.internal_fit(X, y, self_indices_left, self.depth)
-        else:
-            return
-
-        b = []
-        for i in range(len(self.right)):
-            if self.right[i] == True:
-                b.append(i)
-            self_indices_right = np.array(b)
-        print(b)
-
-        if (len(self_indices_right) != int(self.min_samples_leaf-1)) and (self.depth < self.max_depth):
-            self.right = DecisionTreeRegressor(self.max_depth, self.min_samples_leaf)
-            print("\n")
-            print("Right: ")
-            self.right.internal_fit(X, y, self_indices_right, self.depth)
-        else:
-            return
 
 
     def find_best_split(self, i):
@@ -127,27 +87,28 @@ class DecisionTreeRegressor:
         self.N = len(y)
         # best_mse = 100000000000
 
-        if self.N == 1:
-            self.value = y[0]
-            self.split_col = i
+        # if self.N == 1:
+        #     self.value = y[0]
+        #     self.split_col = i
 
         for j in range(self.N):
             left = X <= X[j]
             right = X > X[j]
             if j == 0:
                 self.mse = met.mse(y.mean(),y)
+
             mse_left = met.mse(y[left].mean(), y[left])
             mse_right = met.mse(y[right].mean(), y[right])
             total_mse = mse_left + mse_right
             if total_mse < self.split_mse:
                 self.split_mse = total_mse
-                best_left = left
-                best_right = right
                 self.value = y.mean()
-                self.left = best_left
-                self.right = best_right
+                self.left = left
+                self.right = right
+                # self.left_temp = left
+                # self.right_temp = right
                 self.split_col = i
-                self.split_val =X[j]
+                self.split_val = X[j]
 
 
     # def predict(self, X: pd.DataFrame):
