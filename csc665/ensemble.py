@@ -31,6 +31,7 @@ class RandomForestRegressor:
             y_pred_list.append(t.predict(X))
         total_list = np.array(y_pred_list)
         b = np.mean(total_list, axis = 0)
+        print("B: ", b)
         # print("y_pred_list: ", y_pred_list.shape)
         return b
 
@@ -52,5 +53,6 @@ a = Z.predict(X_test)
 # y_pred_sampled = a.mean(axis = 0)
 # b = r2SC(y_pred_sampled, y_test)
 b = Z.score(a, y_test)
-print("Predict: ",a)
+c = Z.predict([[20,10]])
+print("Predict: ",c)
 print("Score: ", b)

@@ -11,8 +11,12 @@ y = csv_df['Income'].values
 
 Z = DecisionTreeRegressor()
 Z.fit(X,y)
-a = Z.predict(X)
+b = Z.predict(X)
+print(b)
+# print(Z)
+a = Z.predict([[20,10]])
 print(a)
+
 
 
 #
