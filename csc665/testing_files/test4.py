@@ -1,24 +1,12 @@
 import pandas as pd
 import numpy as np
-import metrics as met
-from sklearn.tree import DecisionTreeRegressor
+# import metrics as met
+# from sklearn.tree import DecisionTreeRegressor
 #
 #
-csv_df = pd.read_csv("http://www-bcf.usc.edu/~gareth/ISL/Income2.csv")
-XY = csv_df.drop("Unnamed: 0", axis=1, inplace=True)
-X = csv_df.drop('Income', axis=1)
-y = csv_df['Income'].values
-
-Z = DecisionTreeRegressor()
-Z.fit(X,y)
-b = Z.predict(X)
-print(b)
-# print(Z)
-a = Z.predict([[20,10]])
-print(a)
-
-
-
+# csv_df = pd.read_csv("Income.csv")
+# X = csv_df.drop('Income', axis=1)
+# y = csv_df['Income']
 #
 # # for i in range(len(y)):
 # #     mse_pt1 = met.mse(y[:i].mean(),y[:i])
@@ -53,19 +41,7 @@ print(a)
 #         mse_left = met.mse(y_val[left].mean(), y_val[left])
 #         mse_right = met.mse(y[right].mean(), y[right])
 #         total_mse = mse_left + mse_right
-#         # print(total_mse)
-#
-#         if best_mse < total_mse:
-#             best_mse = total_mse
-#             best_left = left
-#             best_right = right
-#
-#         self.
-#         self.left = best_left
-#         self.right = best_right
-#
-#
-#
+#         print(total_mse)
 #
 #
 #
@@ -84,3 +60,8 @@ print(a)
 # # Z = met.mse(y[2:].mean(),y[2:])
 # # print(Z)
 
+# primes = [2, 3, 5, 7]
+a = np.array([2, 3, 5, 7])
+for i in range(len(a)):
+    b = a[i] + a[i+1]
+    print(b)

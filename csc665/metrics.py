@@ -26,6 +26,12 @@ def rmse(y_predicted, y_true):
 # 	# rsq = 1 - (mse/v)
 # 	# return rsq
 
+def accuracy_score(y_pred, y_actual):
+	y_pred = np.array([y_pred])
+	y_actual = np.array([y_actual])
+	accuracy = np.mean(y_pred == y_actual)
+	return accuracy
+
 
 def rsq(y_pred, y_actual):
 	y_pred = np.asarray(y_pred)
