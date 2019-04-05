@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import metrics as met
+from . import metrics as met
 import math
 import features as fet
 from sklearn.tree import DecisionTreeRegressor
@@ -40,19 +40,19 @@ class RandomForestRegressor:
         #return r2SC(y_pred_sampled, y)
         return met.rsq(y_pred_sampled, y)
 
-csv_df = pd.read_csv("Melbourne_housing_FULL.csv")
-X, y = fet.preprocess_ver_1(csv_df, 'Price')
+# csv_df = pd.read_csv("Melbourne_housing_FULL.csv")
+# X, y = fet.preprocess_ver_1(csv_df, 'Price')
 
-RANDOM_STATE = 10
-X_train, X_test, y_train, y_test = fet.train_test_split(X, y, test_size=0.2,shuffle=True, random_state=RANDOM_STATE)
+# RANDOM_STATE = 10
+# X_train, X_test, y_train, y_test = fet.train_test_split(X, y, test_size=0.2,shuffle=True, random_state=RANDOM_STATE)
 
-print("ytest: ", y_test.shape)
-Z = RandomForestRegressor(5, 1.0)
-Z.fit(X_train, y_train)
-a = Z.predict(X_test)
-# y_pred_sampled = a.mean(axis = 0)
-# b = r2SC(y_pred_sampled, y_test)
-b = Z.score(a, y_test)
-c = Z.predict([[20,10]])
-print("Predict: ",c)
-print("Score: ", b)
+# print("ytest: ", y_test.shape)
+# Z = RandomForestRegressor(5, 1.0)
+# Z.fit(X_train, y_train)
+# a = Z.predict(X_test)
+# # y_pred_sampled = a.mean(axis = 0)
+# # b = r2SC(y_pred_sampled, y_test)
+# b = Z.score(a, y_test)
+# c = Z.predict([[20,10]])
+# print("Predict: ",c)
+# print("Score: ", b)
