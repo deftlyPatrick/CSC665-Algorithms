@@ -451,31 +451,31 @@ class DecisionTreeClassifier:
 
 
 
-# iris = datasets.load_iris()
-# csv_df = pd.DataFrame(data = iris.data  , columns = iris.feature_names)
-# y = iris.target
-# X = csv_df
-#
-
-
-#
-# csv_df = pd.read_csv("iris.csv")
-# X = csv_df.drop('virginica', axis=1)
-# y = csv_df['virginica']
-
-
-# # csv_df = pd.read_csv("bestThreePlayers.csv")
-# # X = csv_df.drop('Three Pointers Made', axis = 1)
-# # y = csv_df['Three Pointers Made']
+iris = datasets.load_iris()
+csv_df = pd.DataFrame(data = iris.data  , columns = iris.feature_names)
+y = iris.target
+X = csv_df
 
 
 
-# X_train, X_test, y_train, y_test = features.train_test_split(X, y, test_size=0.20, shuffle=True, random_state=None)
-# Z = DecisionTreeClassifier(100, 10)
-# Z.fit(X, y)
 
-# a = Z.predict(X)
-# print(a)
+csv_df = pd.read_csv("iris.csv")
+X = csv_df.drop('virginica', axis=1)
+y = csv_df['virginica']
 
-# b = metrics.visualize_tree(Z)
-# print(b)
+
+# csv_df = pd.read_csv("bestThreePlayers.csv")
+# X = csv_df.drop('Three Pointers Made', axis = 1)
+# y = csv_df['Three Pointers Made']
+
+
+
+X_train, X_test, y_train, y_test = features.train_test_split(X, y, test_size=0.20, shuffle=True, random_state=None)
+Z = DecisionTreeClassifier(100, 10)
+Z.fit(X, y)
+
+a = Z.predict(X)
+print(a)
+
+b = metrics.visualize_tree(Z)
+print(b)
