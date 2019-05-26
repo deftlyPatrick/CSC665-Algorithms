@@ -53,6 +53,7 @@ class LinearRegression:
         predictions = np.dot(self.X_bias, self.weights)
         return predictions
 
+    #cost function
     def cost_function(self, h, y):
         return 1 / (2 * len(y)) * pow(h-y, 2).sum()
 
@@ -65,6 +66,7 @@ class LogisticRegression:
         self.bias = 0
         self.X_bias = 0
 
+    #similar to linear regression
     def fit(self, X, y):
         n_samples, n_features = X.shape
         self.weights = np.zeros(shape=(n_features, 1))
@@ -104,10 +106,16 @@ class LogisticRegression:
         return predictions
 
     def predict_proba(self, X):
+        """
+        X is an array of input features, dimensions [n_samples, n_features], e.g.
+        [[1, 1,], [1, 0], [0, 1]]
+        Returns probabilities, e.g. [0.78, 0.68, 0.11]
+        """
         bias = np.ones(shape=(X.shape[0], 1))
         X_bias = np.append(bias, X, axis=1)
         predictions = np.dot(X_bias, self.weights)
         return self.sigmoid_function(predictions)
 
+    #activation function
     def sigmoid_function(self, X):
         return 1 / (1 + np.exp(-X))
