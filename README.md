@@ -164,7 +164,7 @@ Multi-layer (non-linear) = XNOR, XOR
 		#and
 		w3 = np.array([-30, 20, 20])
 ```
-
+- - - - 
 ### graph.py - Neural Networks (Forward/Backward propagation)
 
 Still in progress - being improved
