@@ -82,7 +82,7 @@ Apply the features transformation steps to the dataframe, return new X and y for
 - return Root Mean-Squared Error
 
 `def accuracy_score(y_pred, y_actual)`
--returns the accuracy between the test and training data
+- returns the accuracy between the test and training data
 
 `def rsq(y_predicted, y_true)`
 - return R^2
