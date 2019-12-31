@@ -94,7 +94,7 @@ Apply the features transformation steps to the dataframe, return new X and y for
 
 ### tree.py - Decision Tree Regressor/Classifier
 
-###Decision Tree Regressor
+### Decision Tree Regressor
 
 `def split(indices: np.array)`
 - stores the predicted value that was determined using the smallest MSE (stores the smallest MSE)
@@ -105,7 +105,7 @@ Apply the features transformation steps to the dataframe, return new X and y for
 `def calc_mse`
 - return MSE for that certain index
 
-###Decision Tree Classifer
+### Decision Tree Classifer
 
 `def split(indices: np.array)`
 - predicts the object that is more likely to happen
@@ -137,12 +137,12 @@ Apply the features transformation steps to the dataframe, return new X and y for
 Weights for perceptrons
 
 Single-layer (linear) = AND, OR, NOT
-AND = `np.array([-30, 20, 20])`
-OR = `np.array([-10, 20, 20])`
-NOT = `np.array([1, -1])`
+- AND = `np.array([-30, 20, 20])`
+- OR = `np.array([-10, 20, 20])`
+- NOT = `np.array([1, -1])`
 
 Multi-layer (non-linear) = XNOR, XOR
-XNOR = 
+- XNOR = 
 ```		
 		#and
 		w1 = np.array([-30, 20, 20])
@@ -153,7 +153,7 @@ XNOR =
 		#or
 		w3 = np.array([-10, 20, 20])
 ```
-XOR = 
+- XOR = 
 ```
 		#or
 		w1 = np.array([-10, 20, 20])
